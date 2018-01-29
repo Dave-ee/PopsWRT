@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>PopsWRT</title>
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="stylesheet" href="/popswrt.css">
+        <link rel="stylesheet" href="/bootstrap-iso.css" />
+        <link rel="stylesheet" href="/font-awesome-min.css" />
+        <link rel="stylesheet" href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css" />
+    </head>
+    <body>
+        <ul class="sidenav">
+            <li><a href="/">Home</a></li>
+            <li><a href="/cmd">Command Line</a></li>
+            <li><a class="active" href="/payloads">Payloads</a></li>
+            <li><a href="/config">Configuration</a></li>
+            <li><a href="/shutdown">Shutdown</a></li>
+        </ul>
+        <div class="content">
+            <div class="bootstrap-iso">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="formden_header">
+                                <h2>
+                                    Payloads
+                                </h2>
+                                <p>
+                                    Remotely execute payloads. You cannot run TCPDump and a custom payload at the same time. Tick one or the other.
+                                </p>
+                            </div>
+                            <form class="form-horizontal" method="post">
+                                <div class="form-group" id="div_fm_tcpdump">
+                                    <label class="control-label col-sm-2 bluetext" for="fm_tcpdump">
+                                    TCPDump
+                                    </label>
+                                    <div class="col-sm-10 ">
+                                        <label class="checkbox-inline">
+                                        <input name="fm_tcpdump" type="checkbox" value="Enable TCPDump"/>
+                                        Enable TCPDump
+                                        </label>
+                                        <span class="help-block" id="hint_fm_tcpdump">
+                                        Enable the TCPDump payload.
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <div class="col-sm-10 col-sm-offset-2">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-hourglass-o">
+                                                </i>
+                                            </div>
+                                            <input class="form-control" id="fm_tcpdump_timer" name="fm_tcpdump_timer" placeholder="120" type="text"/>
+                                        </div>
+                                        <span class="help-block" id="hint_fm_tcpdump_timer">
+                                        Amount of time (in seconds) that TCPDump should run.
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <label class="control-label col-sm-2 bluetext" for="fm_payload">
+                                    Custom Payload
+                                    </label>
+                                    <div class="col-sm-10 ">
+                                        <label class="checkbox-inline">
+                                        <input name="fm_custompayload" type="checkbox" value="Enable Custom Payload"/>
+                                        Enable Custom Payload
+                                        </label>
+                                        <span class="help-block" id="hint_fm_custompayload">
+                                        Allows you to run a custom payload you have put in the 'PopsWRT/custom' folder.
+                                        </span>
+                                        <div class="input-group">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-code">
+                                                </i>
+                                            </div>
+                                            <input class="form-control" id="fm_payload" name="fm_payload" placeholder="Payload name" type="text"/>
+                                        </div>
+                                        <span class="help-block" id="hint_fm_payload">
+                                        Execute a payload by typing in the name of it's directory.
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="div_fm_parallel">
+                                    <div class="col-sm-10 col-sm-offset-2">
+                                        <label class="checkbox-inline">
+                                        <input name="fm_parallel" type="checkbox" value="Enable 'Parallel' mode"/>
+                                        Enable 'Parallel' mode
+                                        </label>
+                                        <span class="help-block" id="hint_fm_parallel">
+                                        Enable this if you want the payload to run in parallel with PopsWRT.
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-10 col-sm-offset-2">
+                                        <button class="btn btn-primary " name="submit" type="submit">
+                                        Launch
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

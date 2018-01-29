@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>PopsWRT</title>
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="stylesheet" href="/popswrt.css">
+        <link rel="stylesheet" href="/bootstrap-iso.css" />
+        <link rel="stylesheet" href="/font-awesome-min.css" />
+        <link rel="stylesheet" href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css" />
+		<script>
+			function showOutput() {
+				var text = document.getElementById('fm_output');
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET","/output",true);
+				xhr.onreadystatechange=function() {
+					if (this.readyState!==4) return;
+					text.innerHTML = this.responseText;
+				}
+				xhr.send();
+			}
+			function getOutput() {
+				setTimeout(showOutput, 3500);
+			}
+			function shutdown() {
+				if (confirm('Are you sure you want to shutdown?')) {
+					window.location.href = "/shutdown";
+				} else {
+					return false;
+				}
+			}
+			function reboot() {
+				if (confirm('Are you sure you want to reboot?')) {
+					window.location.href = "/reboot";
+				} else {
+					return false;
+				}
+			}
+		</script>
+    </head>
+    <body>
+        <ul class="sidenav">
+            <li><a href="/">Home</a></li>
+            <li><a class="active" href="/cmd">Command Line</a></li>
+            <li><a href="/payloads">Payloads</a></li>
+            <li><a href="/config">Configuration</a></li>
+			<li><a class="hoverable" onclick="reboot()">Reboot</a></li>
+            <li><a class="hoverable" onclick="shutdown()">Shutdown</a></li>
+        </ul>
+        <div class="content">
+			<div class="bootstrap-iso">
+			 <div class="container-fluid">
+			  <div class="row">
+			   <div class="col-md-6 col-sm-6 col-xs-12">
+				<div class="formden_header">
+				 <h2>
+				  Command Line
+				 </h2>
+				 <p>
+				  Pass commands to the Packet Squirrel.
+				 </p>
+				</div>
+				<form class="form-horizontal" method="post" onsubmit="getOutput()">
+				 <div class="form-group ">
+				  <label class="control-label col-sm-2 bluetext" for="fm_text">
+				   Command
+				  </label>
+				  <div class="col-sm-10">
+				   <div class="input-group">
+					<div class="input-group-addon">
+					 <i class="fa fa-code">
+					 </i>
+					</div>
+					<input class="form-control" id="fm_text" name="fm_text" placeholder="echo 'Write your command here..'" type="text"/>
+				   </div>
+				   <span class="help-block" id="hint_fm_text">
+					Execute a command.
+				   </span>
+				  </div>
+				 </div>
+				 <div class="form-group ">
+				  <label class="control-label col-sm-2 bluetext" for="fm_output">
+				   Output
+				  </label>
+				  <div class="col-sm-10">
+				   <textarea class="form-control" cols="40" id="fm_output" name="fm_output" placeholder="Output shows here." rows="10" readonly></textarea>
+				   <span class="help-block" id="hint_fm_output">
+					Output will take at least 3 seconds to show. If it's a command that will take longer to execute you may have to reload the output box when you think it should be done.
+				   </span>
+				  </div>
+				 </div>
+				 <div class="form-group">
+				  <div class="col-sm-10 col-sm-offset-2">
+				   <button class="btn btn-primary " name="submit" type="submit">
+					Execute
+				   </button>
+				   <button class="btn btn-primary " name="submit" onclick="showOutput()">
+					Reload
+				   </button>
+				  </div>
+				 </div>
+				</form>
+			   </div>
+			  </div>
+			 </div>
+			</div>
+        </div>
+    </body>
+</html>

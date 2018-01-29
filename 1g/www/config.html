@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>PopsWRT</title>
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="stylesheet" href="/popswrt.css">
+        <link rel="stylesheet" href="/bootstrap-iso.css" />
+        <link rel="stylesheet" href="/font-awesome-min.css" />
+        <link rel="stylesheet" href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css" />
+		<script>
+			function resetCfg() {
+				if (confirm('Are you sure you want to reset the entire configuration? This will cause the PS to reboot.')) {
+					alert("Restarting PopsWRT, please use the default IP to reconnect.")
+				} else {
+					return false;
+				}
+			}
+			function updateCfg() {
+				if (confirm('Are you sure you want to apply these changes? This will cause PopsWRT to restart.')) {
+					alert("PopsWRT is being re-configured, please wait. If you set a new static IP please use that to reconnect.")
+				} else {
+					return false;
+				}
+			}
+			function shutdown() {
+				if (confirm('Are you sure you want to shutdown?')) {
+					window.location.href = "/shutdown";
+				} else {
+					return false;
+				}
+			}
+			function reboot() {
+				if (confirm('Are you sure you want to reboot?')) {
+					window.location.href = "/reboot";
+				} else {
+					return false;
+				}
+			}
+		</script>
+    </head>
+    <body>
+        <ul class="sidenav">
+            <li><a href="/">Home</a></li>
+            <li><a href="/cmd">Command Line</a></li>
+            <li><a href="/payloads">Payloads</a></li>
+            <li><a class="active" href="/config">Configuration</a></li>
+			<li><a class="hoverable" onclick="reboot()">Reboot</a></li>
+            <li><a class="hoverable" onclick="shutdown()">Shutdown</a></li>
+        </ul>
+        <div class="content">
+            <div class="bootstrap-iso">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="formden_header">
+                                <h2>
+                                    Network Settings
+                                </h2>
+                                <p>
+                                    Here you can change the network settings and control modules for your Packet Squirrel.
+                                </p>
+                            </div>
+                            <form class="form-horizontal" method="post" onsubmit="updateCfg()">
+                                <div class="form-group ">
+                                    <label class="control-label col-sm-2 bluetext" for="fm_netmode">
+                                    Network Mode
+                                    </label>
+                                    <div class="col-sm-10">
+                                        <select class="select form-control" id="fm_netmode" name="fm_netmode">
+                                            <option value="Bridge">
+                                                BRIDGE
+                                            </option>
+                                            <option value="Clone">
+                                                CLONE
+                                            </option>
+                                            <option value="NAT">
+                                                NAT
+                                            </option>
+                                        </select>
+                                        <span class="help-block" id="hint_fm_netmode">
+                                        More information on these can be found on the Packet Squirrel website.
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <label class="control-label col-sm-2 bluetext" for="fm_staticip">
+                                    Static IP Address
+                                    </label>
+                                    <div class="col-sm-10">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-sitemap">
+                                                </i>
+                                            </div>
+                                            <input class="form-control" id="fm_staticip" name="fm_staticip" placeholder="172.16.32.1" type="text"/>
+                                        </div>
+                                        <span class="help-block" id="hint_fm_staticip">
+                                        Manually set the IP of the Packet Squirrel. WARNING: Overrides DHCP-given IPs.
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <label class="control-label col-sm-2 bluetext" for="fm_netmask">
+                                    Netmask
+                                    </label>
+                                    <div class="col-sm-10">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-sitemap">
+                                                </i>
+                                            </div>
+                                            <input class="form-control" id="fm_netmask" name="fm_netmask" placeholder="255.255.255.0" type="text"/>
+                                        </div>
+                                        <span class="help-block" id="hint_fm_netmask">
+                                        Manually set the netmask that the Packet Squirrel should use.
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="div_fm_dhcp">
+                                    <label class="control-label col-sm-2 bluetext" for="fm_dhcp">
+                                    DHCP
+                                    </label>
+                                    <div class="col-sm-10 ">
+                                        <label class="checkbox-inline">
+                                        <input name="fm_dhcp" type="checkbox" value="Enable DHCP"/>
+                                        Enable DHCP
+                                        </label>
+                                        <span class="help-block" id="hint_fm_dhcp">
+                                        Enables the DHCP server.
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <div class="col-sm-10 col-sm-offset-2">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-arrow-circle-right">
+                                                </i>
+                                            </div>
+                                            <input class="form-control" id="fm_dhcp_start" name="fm_dhcp_start" placeholder="100" type="text"/>
+                                        </div>
+                                        <span class="help-block" id="hint_fm_dhcp_start">
+                                        The host ID to start from (last 1-3 digits of an IP).
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <div class="col-sm-10 col-sm-offset-2">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-sort-numeric-asc">
+                                                </i>
+                                            </div>
+                                            <input class="form-control" id="fm_dhcp_limit" name="fm_dhcp_limit" placeholder="150" type="text"/>
+                                        </div>
+                                        <span class="help-block" id="hint_fm_dhcp_limit">
+                                        Amount of clients that can receive IP addresses from the Packet Squirrel.
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <label class="control-label col-sm-2 bluetext">
+                                    DNS
+                                    </label>
+                                    <div class="col-sm-10 ">
+                                        <div class="checkbox">
+                                            <label class="checkbox">
+                                            <input name="fm_dns" type="checkbox" value="Enable DNS"/>
+                                            Enable DNS
+                                            </label>
+                                        </div>
+                                        <div class="checkbox">
+                                            <label class="checkbox">
+                                            <input name="fm_dns_mode" type="checkbox" value="Enable 'Aggressive' mode"/>
+                                            Enable 'Aggressive' mode
+                                            </label>
+                                        </div>
+                                        <span class="help-block" id="hint_fm_dns">
+                                        Enables the DNS server.
+                                        Aggressive mode grabs all traffic passing through on the DNS port, forcing them to resolve to this DNS server.
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <div class="col-sm-10 col-sm-offset-2">
+                                        <textarea class="form-control" cols="40" id="fm_dns_entries" name="fm_dns_entries" placeholder="domain/address" rows="10"></textarea>
+                                        <span class="help-block" id="hint_fm_dns_entries">
+                                        Add DNS entries here.
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="div_fm_ssh">
+									<label class="control-label col-sm-2 bluetext" for="fm_ssh">
+									SSH
+									</label>
+									<div class="col-sm-10 ">
+                                        <label class="checkbox-inline">
+                                        <input name="fm_ssh" type="checkbox" value="Enable SSH"/>
+                                        Enable SSH
+                                        </label>
+                                        <span class="help-block" id="hint_fm_ssh">
+                                        Enable the SSH server for you to access the Packet Squirrel's command line directly.
+                                        </span>
+                                    </div>
+								</div>
+								<div class="form-group" id="div_fm_vpn">
+                                    <label class="control-label col-sm-2 bluetext" for="fm_vpn">
+                                    VPN Client
+                                    </label>
+                                    <div class="col-sm-10 ">
+                                        <label class="checkbox-inline">
+                                        <input name="fm_vpn" type="checkbox" value="Enable VPN"/>
+                                        Enable VPN
+                                        </label>
+                                        <span class="help-block" id="hint_fm_vpn">
+                                        Enable the VPN client.
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="div_fm_vpn_mode">
+                                    <div class="col-sm-10 col-sm-offset-2">
+                                        <label class="checkbox-inline">
+                                        <input name="fm_vpn_mode" type="checkbox" value="Enable 'Tunnel' mode"/>
+                                        Enable 'Tunnel' mode
+                                        </label>
+                                        <span class="help-block" id="hint_fm_vpn_mode">
+                                        Enables 'Tunnel' mode, allowing clients to use the VPN.
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <div class="col-sm-10 col-sm-offset-2">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-book">
+                                                </i>
+                                            </div>
+                                            <input class="form-control" id="fm_vpn_dns" name="fm_vpn_dns" placeholder="8.8.8.8" type="text"/>
+                                        </div>
+                                        <span class="help-block" id="hint_fm_vpn_dns">
+                                        Set the DNS server to use with the VPN.
+                                        </span>
+                                    </div>
+                                </div>
+                                <!--
+                                    [[WIP/]]
+                                    <div class="form-group ">
+                                     <div class="col-sm-10 col-sm-offset-2">
+                                      <div class="input-group">
+                                    <div class="input-group-addon">
+                                     <i class="fa fa-upload">
+                                     </i>
+                                    </div>
+                                    <input class="form-control" id="fm_vpn_file" name="fm_vpn_file" type="file" accept=".ovpn"/>
+                                      </div>
+                                      <span class="help-block" id="hint_fm_vpn_file">
+                                    Upload an OpenVPN configuration file.
+                                      </span>
+                                     </div>
+                                    </div>
+                                    [[/WIP]]
+                                !-->
+                                <div class="form-group">
+                                    <div class="col-sm-10 col-sm-offset-2">
+                                        <button class="btn btn-primary " name="submit" type="submit">
+                                        Apply
+                                        </button>
+										<button class="btn btn-primary " name="resetsubmit" onclick="resetCfg()">
+                                        Reset Configuration
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

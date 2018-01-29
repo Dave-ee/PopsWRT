@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>PopsWRT</title>
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="stylesheet" href="/popswrt.css">
+		<link rel="stylesheet" href="/bootstrap-iso.css" />
+		<script>
+			function getOutput() {
+				setTimeout(showOutput, 3000);
+			}
+			function showOutput() {
+				var text = document.getElementById('payload_log');
+				var text2 = document.getElementById('server_log');
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET","/payload-log",true);
+				xhr.onreadystatechange=function() {
+					if (this.readyState!==4) return;
+					text.innerHTML = this.responseText;
+				}
+				var xhr2 = new XMLHttpRequest();
+				xhr2.open("GET","/server-log",true);
+				xhr2.onreadystatechange=function() {
+					if (this.readyState!==4) return;
+					text2.innerHTML = this.responseText;
+				}
+				xhr.send();
+				xhr2.send();
+				getOutput();
+			}
+		</script>
+    </head>
+    <body onload="showOutput()">
+        <ul class="sidenav">
+            <li><a class="active" href="/">Home</a></li>
+            <li><a href="/cmd">Command Line</a></li>
+            <li><a href="/payloads">Payloads</a></li>
+            <li><a href="/config">Configuration</a></li>
+            <li><a href="/shutdown">Shutdown</a></li>
+        </ul>
+        <div class="content">
+            <h1>PopsWRT</h1>
+            <p>This is the home page for PopsWRT.</p>
+			<br>
+			<br>
+			<div class="left-log">
+				<label class="control-label col-sm-2 bluetext" for="payload_log">
+					Payload Log
+				</label>
+				<textarea class="form-control" cols="40" id="payload_log" name="payload_log" rows="10"></textarea>
+			</div>
+			<div class="right-log">
+				<label class="control-label col-sm-2 bluetext" for="server_log">
+					Server Log
+				</label>
+				<textarea class="form-control" cols="40" id="server_log" name="server_log" rows="10"></textarea>
+			</div>
+        </div>
+    </body>
+</html>
