@@ -54,7 +54,12 @@ function sled() {
 }
 
 # Set DNS for VPN..bad habits taught by the man himself
+# Usage: setdns <ip>
+# Keep in mind the IP needs to be a string
 function setdns() {
+	if [ $1 ]; then
+		$DNS_SERVER=$1
+	fi
 	while true; do
 		[[ ! $(grep -q "$DNS_SERVER" /tmp/resolv.conf) ]] && {
 			echo -e "search lan\nnameserver $DNS_SERVER" > /tmp/resolv.conf

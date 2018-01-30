@@ -7,17 +7,19 @@
 # run <payload>
 # - Run a custom payload or even 'tcpdump'
 # tellme <arg>
-# - List of arguments:
-# -- netmode
-# -- ip
-# -- netmask
-# -- dhcp start
-# -- dhcp limit
-# -- config
+# Arguments:
+# -- netmode			# Returns the netmode
+# -- ip					# Returns the ip
+# -- netmask			# Returns the netmask
+# -- dhcp start			# Returns the starting host ID
+# -- dhcp limit			# Returns the IP-leasing limit set for the DHCP server
+# -- config				# Returns output of config file
+# -- dns 				# Returns the current DNS server set for the VPN
+# -- service <service> 	# Returns if a service is running or not. Services: SSH, DNS, DHCP, VPN
 # sled <colour>
-# - Sets the LED colour (doesn't turn on LED if stealth mode is on)
-# log <arg>
-# - Writes the argument straight to the main log file
+# -- Set the colour of the LED (if STEALTH_MODE is on then it won't do anything)
+# log <text>
+# -- Output the argument to the log file
 
 # Used to display output in the textarea
 # Does nothing different to "echo" at the moment, but it could do more..
@@ -36,6 +38,8 @@ function tellme() {
 		output "dhcp start -> returns dhcp start"
 		output "dhcp limit -> returns dhcp limit"
 		output "config -> returns contents of config file"
+		output "dns -> returns dns for vpn"
+		output "service <arg> -> returns if a service is running or not (use ? for more details)"
 	elif [ "$1" = "netmode" ]; then
 		if [ $fm_netmode ]; then
 			var=$fm_netmode
@@ -52,11 +56,29 @@ function tellme() {
 		elif [ "$2" = "limit" ]; then
 			var=$(uci get dhcp.lan.limit)
 		fi
+	elif [ "$1" = "dns" ]; then
+		var=$DNS_SERVER
 	elif [ "$1" = "config" ]; then
 		if [ -f $fs_CONFIG/config ]; then
 			var=$(cat $fs_CONFIG/config)
 		else
 			var="default - no configuration has been pushed yet"
+		fi
+	elif [ "$1" = "service" ]; then
+		if [ "$2" = "?" ]; then
+			output "Arguments for 'service':"
+			output "dns"
+			output "dhcp"
+			output "ssh"
+			output "vpn"
+		elif [ "$2" = "dns" ]; then
+			var=$b_DNS
+		elif [ "$2" = "ssh" ]; then
+			var=$b_SSH
+		elif [ "$2" = "dhcp" ]; then
+			var=$b_DHCP
+		elif [ "$2" = "vpn" ]; then
+			var=$b_VPN
 		fi
 	fi
 	if [ ! "$var" = "nil" ]; then

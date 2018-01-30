@@ -3,25 +3,14 @@
  Version: 1g-2
 +-----------------------+
 
-+---------------+
- VERSION CHANGES
-+---------------+
- - Static IP can't be changed if NETMODE is CLONE
- - 'Shutdown' and 'Reboot' options
- - Confirmation pop-ups on potentially-destructive decisions
- - 'Reset Configuration' button to reset the configuration to defaults
- - Configuration kept over reboots and shutdowns
-+--------------------------------------------------------------------------+
-
 +-------------------+
  VARIANT-2 CHANGELOG
 +-------------------+
- BUG - Fixed "Setting up first time use for PopsWRT.." message
- BUG - Fixed Configuration page's sidebar to allow for hoverable "Reboot" and "Shutdown"
- BUG - Fixed textareas being editable directly by the user
- BUG - Fixed issue with API output not displaying
- FEATURE - Added an API for users to use with CLI (refer to the 'api.sh' file in the 'custom' folder)
-+------------------------------------------------------------------------------------------------------------+
+ API - Added "service" to check running services
+ API - Added "dns" to check current DNS server for the VPN
+ API - Adjusted the list of available commands
+ API - Adjusted "setdns" to accept arguments so that users can remotely change the DNS server for the VPN
++--------------------------------------------------------------------------------------------------------+
 
 +-----------------------+
  EXPLANATION OF VERSIONS
