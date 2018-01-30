@@ -29,18 +29,8 @@ function output() {
 
 # Tells you general information
 function tellme() {
-	$var="nil"
-	if [ "$1" = "?" ]; then
-		output "Arguments:"
-		output "netmode -> returns netmode"
-		output "ip -> returns current ip"
-		output "netmask -> returns netmask"
-		output "dhcp start -> returns dhcp start"
-		output "dhcp limit -> returns dhcp limit"
-		output "config -> returns contents of config file"
-		output "dns -> returns dns for vpn"
-		output "service <arg> -> returns if a service is running or not (use ? for more details)"
-	elif [ "$1" = "netmode" ]; then
+	$var=""
+	if [ "$1" = "netmode" ]; then
 		if [ $fm_netmode ]; then
 			var=$fm_netmode
 		else
@@ -57,7 +47,7 @@ function tellme() {
 			var=$(uci get dhcp.lan.limit)
 		fi
 	elif [ "$1" = "dns" ]; then
-		var=$DNS_SERVER
+		var="$DNS_SERVER"
 	elif [ "$1" = "config" ]; then
 		if [ -f $fs_CONFIG/config ]; then
 			var=$(cat $fs_CONFIG/config)
@@ -65,13 +55,7 @@ function tellme() {
 			var="default - no configuration has been pushed yet"
 		fi
 	elif [ "$1" = "service" ]; then
-		if [ "$2" = "?" ]; then
-			output "Arguments for 'service':"
-			output "dns"
-			output "dhcp"
-			output "ssh"
-			output "vpn"
-		elif [ "$2" = "dns" ]; then
+		if [ "$2" = "dns" ]; then
 			var=$b_DNS
 		elif [ "$2" = "ssh" ]; then
 			var=$b_SSH
@@ -81,7 +65,5 @@ function tellme() {
 			var=$b_VPN
 		fi
 	fi
-	if [ ! "$var" = "nil" ]; then
-		output $var
-	fi
+	output $var
 }

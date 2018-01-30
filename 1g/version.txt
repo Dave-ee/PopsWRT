@@ -1,16 +1,16 @@
 +-----------------------+
  Author/s: Dave-ee Jones
- Version: 1g-2
+ Version: 1g-3
 +-----------------------+
 
 +-------------------+
- VARIANT-2 CHANGELOG
+ VARIANT-3 CHANGELOG
 +-------------------+
- API - Added "service" to check running services
- API - Added "dns" to check current DNS server for the VPN
- API - Adjusted the list of available commands
- API - Adjusted "setdns" to accept arguments so that users can remotely change the DNS server for the VPN
-+--------------------------------------------------------------------------------------------------------+
+ PY - Change IP of default domain name when IP is changed
+ FIX - SSH server didn't show as running when booted on startup
+ FIX - "setdns" causes PopsWRT to get stuck
+ FIX - CLI doesn't display normal commands correctly
++--------------------------------------------------------------+
 
 +-----------------------+
  EXPLANATION OF VERSIONS

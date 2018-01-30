@@ -150,6 +150,9 @@ class c_HANDLER(SimpleHTTPRequestHandler):
 						with open(MAIN_DIR + "/cfg/hosts","w") as dest:
 							for line in src:
 								dest.write("address=/%s" % (line.rstrip("\n")))
+					f = open(MAIN_DIR + "/cfg/hosts","a")
+					f.write("address=/popswrt.com/" + VARIABLES["fm_staticip"][0])
+					f.close()
 					os.remove(MAIN_DIR + "/cfg/hosts.tmp")
 			else:
 				f_ADD_CFG("fm_dns","0")
