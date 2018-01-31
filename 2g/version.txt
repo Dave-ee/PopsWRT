@@ -1,0 +1,23 @@
++-----------------------+
+ Author/s: Dave-ee Jones
+ Version: 2g-1
++-----------------------+
+
++-------------------+
+ VERSION 2 CHANGELOG
++-------------------+
+ SH 	- Re-written the entire payload.sh (based on itself), tweaking as I go
+ SH	- "update" function now takes a path to a configuration file as an argument
+ API	- Added "cfg" as a configuration management function
+ API	- Added "svc" as a service management function
+ FIX 	- DNS didn't show as running when it was launched on startup
+ FIX	- Default DNS entry wouldn't apply unless other entries were added
++----------------------------------------------------------------------------------+
+
++-----------------------+
+ EXPLANATION OF VERSIONS
++-----------------------+
+ 0g = Pop
+ 1g = Grand Pop
+ 2g = Great Grand Pop
++--------------------+

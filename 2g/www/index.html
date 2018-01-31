@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>PopsWRT</title>
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="stylesheet" href="/popswrt.css">
+		<link rel="stylesheet" href="/bootstrap-iso.css" />
+		<link rel="stylesheet" href="/font-awesome-min.css" />
+        <link rel="stylesheet" href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css" />
+		<script>
+			function getOutput() {
+				setTimeout(showOutput, 3000);
+			}
+			function showOutput() {
+				var text = document.getElementById('payload_log');
+				var text2 = document.getElementById('server_log');
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET","/payload-log",true);
+				xhr.onreadystatechange=function() {
+					if (this.readyState!==4) return;
+					text.innerHTML = this.responseText;
+				}
+				var xhr2 = new XMLHttpRequest();
+				xhr2.open("GET","/server-log",true);
+				xhr2.onreadystatechange=function() {
+					if (this.readyState!==4) return;
+					text2.innerHTML = this.responseText;
+				}
+				xhr.send();
+				xhr2.send();
+				getOutput();
+			}
+			function shutdown() {
+				if (confirm('Are you sure you want to shutdown?')) {
+					window.location.href = "/shutdown";
+				} else {
+					return false;
+				}
+			}
+			function reboot() {
+				if (confirm('Are you sure you want to reboot?')) {
+					window.location.href = "/reboot";
+				} else {
+					return false;
+				}
+			}
+		</script>
+    </head>
+    <body onload="showOutput()">
+        <ul class="sidenav">
+            <li><a class="active" href="/">Home</a></li>
+            <li><a href="/cmd">Command Line</a></li>
+            <li><a href="/payloads">Payloads</a></li>
+            <li><a href="/config">Configuration</a></li>
+			<li><a class="hoverable" onclick="reboot()">Reboot</a></li>
+            <li><a class="hoverable" onclick="shutdown()">Shutdown</a></li>
+        </ul>
+        <div class="content">
+			<div class="bootstrap-iso">
+				<h2>PopsWRT</h2>
+				<br>
+				<p>This is the home page for PopsWRT.</p>
+				<div class="left-log">
+					<label class="control-label col-sm-12 bluetext" for="payload_log">
+						Payload Log
+					</label>
+					<textarea class="form-control" cols="40" id="payload_log" name="payload_log" rows="10" readonly></textarea>
+				</div>
+				<div class="right-log">
+					<label class="control-label col-sm-12 bluetext" for="server_log">
+						Server Log
+					</label>
+					<textarea class="form-control" cols="40" id="server_log" name="server_log" rows="10" readonly></textarea>
+				</div>
+			</div>
+        </div>
+    </body>
+</html>
